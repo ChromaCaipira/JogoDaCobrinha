@@ -25,7 +25,7 @@ public class PainelJogo extends JPanel implements ActionListener{
 	int y[] = new int[larguraTela+alturaTela+1]; //ALTURA DAS UNIDADES
 	int partesCobra = 6; //QUANTIDADE INICIAL DAS PARTES DA COBRA
 	int pontuacao; //CONTA QUANTOS ELEMENTOS FORAM COMIDOS
-	int highscore=0; //ARMAZENA ÚLTIMA PONTUAÇÃO MÁXIMA
+	int highscore = 0; //ARMAZENA ÚLTIMA PONTUAÇÃO MÁXIMA
 	int alimentoX; //POSIÇÃO X DO ALIMENTO
 	int alimentoY; //POSIÇÃO Y DO ALIMENTO
 	char direcao = 'D'; //DIREÇÃO QUE A COBRA COMEÇA A SE MEXER (direita)
@@ -41,6 +41,7 @@ public class PainelJogo extends JPanel implements ActionListener{
 		this.addKeyListener(new MyKeyAdapter()); //ADICIONA O SISTEMA QUE OUVE O TECLADO
 		iniciarJogo();
 	}
+	
 	public void iniciarJogo() {
 		novoAlimento(); //CRIA UM NOVO ALIMENTO NA TELA
 		rodando = true; //FAZ O JOGO COMEÇAR A RODAR
@@ -59,6 +60,7 @@ public class PainelJogo extends JPanel implements ActionListener{
 				g.drawLine(i*tamanhoUnidade, 0, i*tamanhoUnidade, alturaTela);
 				g.drawLine(0, i*tamanhoUnidade, larguraTela, i*tamanhoUnidade);
 			}
+			//alimento
 			g.setColor(Color.red); //COR DO ALIMENTO
 			//Posição (já definida) e Dimensões do Alimento ABAIXO
 			g.fillOval(alimentoX, alimentoY, tamanhoUnidade, tamanhoUnidade);
@@ -77,14 +79,14 @@ public class PainelJogo extends JPanel implements ActionListener{
 			g.setColor(Color.GRAY); //COR DA FONTE DA PONTUAÇÃO (CINZA)
 			g.setFont(new Font("Monospaced", Font.BOLD, 45)); //FONTE DO TEXTO
 			FontMetrics metricas1 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
-			//DESENHA O TEXTO, COM TAL COR, MÉTRICA E TAMANHO PADRÃO DA FONTE
+			//DESENHA O TEXTO, COM SUA LARGURA E ALTURA
 			g.drawString("PONTUAÇÃO: " + pontuacao, (larguraTela - metricas1.stringWidth("PONTUAÇÃO: " + pontuacao))/2, g.getFont().getSize());
 			
 			//PONTUAÇÃO MÁXIMA
 			g.setColor(Color.GRAY); //COR DA FONTE DA PONTUAÇÃO (CINZA)
 			g.setFont(new Font("Monospaced", Font.BOLD, 45)); //FONTE DO TEXTO
 			FontMetrics metricas2 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
-			//DESENHA O TEXTO, COM TAL COR, MÉTRICA E TAMANHO PADRÃO DA FONTE
+			//DESENHA O TEXTO, COM SUA LARGURA E ALTURA
 			g.drawString("HIGHSCORE: " + highscore, (larguraTela - metricas2.stringWidth("HIGHSCORE: " + highscore))/2, (alturaTela - 35));
 		} //IF(RODANDO)
 		else {
@@ -165,7 +167,7 @@ public class PainelJogo extends JPanel implements ActionListener{
 	
 	public void fimDeJogo(Graphics g) {
 		if(!rodando) {
-			if(pontuacao>highscore) { //SE PONTUAÇÃO FINAL FOR MAIOR QUE A PONTUAÇÃO MÁXIMA..
+			if(pontuacao > highscore) { //SE PONTUAÇÃO FINAL FOR MAIOR QUE A PONTUAÇÃO MÁXIMA..
 				highscore = pontuacao; //PONTUAÇÃO MÁXIMA SERÁ PONTUAÇÃO FINAL
 			}
 			//PONTUAÇÃO FINAL
@@ -181,7 +183,6 @@ public class PainelJogo extends JPanel implements ActionListener{
 			FontMetrics metricas2 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
 			//DESENHA O TEXTO, COM TAL COR, MÉTRICA E TAMANHO PADRÃO DA FONTE
 			g.drawString("HIGHSCORE: " + highscore, (larguraTela - metricas2.stringWidth("HIGHSCORE: " + highscore))/2, g.getFont().getSize()+75);
-			
 			
 			if(partesCobra == larguraTela+alturaTela) { //SE A COBRA OCUPAR TODOS OS ESPAÇOS
 				g.setColor(Color.green); //COR DA FONTE DO TEXTO PONTUAÇÃO MÁXIMA (VERDE)
@@ -213,9 +214,9 @@ public class PainelJogo extends JPanel implements ActionListener{
 				g.drawString("Aperte ESPAÇO", (larguraTela - metricas4.stringWidth("Aperte ESPAÇO"))/2, (alturaTela/2)+100);
 				g.drawString("para Reiniciar", (larguraTela - metricas4.stringWidth("para Reiniciar"))/2, (alturaTela/2)+150);
 			}
-		}
-	}
-
+		} //IF DE NÃO ESTAR RODANDO
+	} //FUNÇÃO FIM DE JOGO
+	
 	@Override
 	public void actionPerformed(ActionEvent e) { //SE ALGUMA AÇÃO É OMITIDA, CHAMA ESSE MÉTODO
 		if(rodando) { //SE O JOGO ESTIVER RODANDO: O JOGADOR PODE SE MOVER, O JOGO CHECA O ALIMENTO E A COLISÃO

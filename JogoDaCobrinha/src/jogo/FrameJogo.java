@@ -8,8 +8,8 @@ public class FrameJogo extends JFrame{
 		this.setTitle("Jogo da Cobrinha"); //NOME DA JANELA
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //FECHA AO CLICAR NO X
 		this.setResizable(false); //NÃO PODE SER REDIMENSIONADO
-		this.pack();
-		this.setVisible(true);
-		this.setLocationRelativeTo(null);
+		this.pack(); //DESTE PACOTE
+		this.setVisible(true); //APARECER EM PRIMEIRO PLANO
+		this.setLocationRelativeTo(null); //APARECER NO MEIO DA TELA
 	}
 }
