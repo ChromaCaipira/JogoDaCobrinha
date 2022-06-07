@@ -16,13 +16,13 @@ import javax.swing.Timer;
 
 public class PainelJogo extends JPanel implements ActionListener{
 	
-	static final int larguraTela = 600; //DEFINE LARGURA (X) DA TELA
-	static final int alturaTela = 600; //DEFINE ALTURA (Y) DA TELA
-	static final int tamanhoUnidade = 25; //TAMANHO DE TODAS AS UNIDADES E DIMENSÕES DA GRADE DO JOGO
-	static final int totalUnidade = (larguraTela*alturaTela)/tamanhoUnidade; //DEFINE AS UNIDADES DO JOGO
-	static final int delay = 75; //VELOCIDADE DO JOGO/DA COBRA
-	final int x[] = new int[larguraTela+alturaTela+1]; //LARGURA DAS UNIDADES
-	final int y[] = new int[larguraTela+alturaTela+1]; //ALTURA DAS UNIDADES
+	int larguraTela = 600; //DEFINE LARGURA (X) DA TELA
+	int alturaTela = 600; //DEFINE ALTURA (Y) DA TELA
+	int tamanhoUnidade = 25; //TAMANHO DE TODAS AS UNIDADES E DIMENSÕES DA GRADE DO JOGO
+	int totalUnidade = (larguraTela*alturaTela)/tamanhoUnidade; //DEFINE AS UNIDADES DO JOGO
+	int delay = 75; //VELOCIDADE DO JOGO/DA COBRA
+	int x[] = new int[larguraTela+alturaTela+1]; //LARGURA DAS UNIDADES
+	int y[] = new int[larguraTela+alturaTela+1]; //ALTURA DAS UNIDADES
 	int partesCobra = 6; //QUANTIDADE INICIAL DAS PARTES DA COBRA
 	int contador; //CONTA QUANTOS ELEMENTOS FORAM COMIDOS
 	int alimentoX; //POSIÇÃO X DO ALIMENTO
