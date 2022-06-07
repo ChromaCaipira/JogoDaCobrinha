@@ -1,4 +1,4 @@
-package vista;
+package jogo;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,7 +24,8 @@ public class PainelJogo extends JPanel implements ActionListener{
 	int x[] = new int[larguraTela+alturaTela+1]; //LARGURA DAS UNIDADES
 	int y[] = new int[larguraTela+alturaTela+1]; //ALTURA DAS UNIDADES
 	int partesCobra = 6; //QUANTIDADE INICIAL DAS PARTES DA COBRA
-	int contador; //CONTA QUANTOS ELEMENTOS FORAM COMIDOS
+	int pontuacao; //CONTA QUANTOS ELEMENTOS FORAM COMIDOS
+	int highscore=0; //ARMAZENA ÚLTIMA PONTUAÇÃO MÁXIMA
 	int alimentoX; //POSIÇÃO X DO ALIMENTO
 	int alimentoY; //POSIÇÃO Y DO ALIMENTO
 	char direcao = 'D'; //DIREÇÃO QUE A COBRA COMEÇA A SE MEXER (direita)
@@ -74,10 +75,17 @@ public class PainelJogo extends JPanel implements ActionListener{
 			}
 			//PONTUAÇÃO ATUAL
 			g.setColor(Color.GRAY); //COR DA FONTE DA PONTUAÇÃO (CINZA)
-			g.setFont(new Font("Monospaced", Font.BOLD, 75)); //FONTE DO TEXTO
+			g.setFont(new Font("Monospaced", Font.BOLD, 45)); //FONTE DO TEXTO
 			FontMetrics metricas1 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
 			//DESENHA O TEXTO, COM TAL COR, MÉTRICA E TAMANHO PADRÃO DA FONTE
-			g.drawString("Pontuação: " + contador, (larguraTela - metricas1.stringWidth("Pontuação: " + contador))/2, g.getFont().getSize());
+			g.drawString("PONTUAÇÃO: " + pontuacao, (larguraTela - metricas1.stringWidth("PONTUAÇÃO: " + pontuacao))/2, g.getFont().getSize());
+			
+			//PONTUAÇÃO MÁXIMA
+			g.setColor(Color.GRAY); //COR DA FONTE DA PONTUAÇÃO (CINZA)
+			g.setFont(new Font("Monospaced", Font.BOLD, 45)); //FONTE DO TEXTO
+			FontMetrics metricas2 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
+			//DESENHA O TEXTO, COM TAL COR, MÉTRICA E TAMANHO PADRÃO DA FONTE
+			g.drawString("HIGHSCORE: " + highscore, (larguraTela - metricas2.stringWidth("HIGHSCORE: " + highscore))/2, (alturaTela - 35));
 		} //IF(RODANDO)
 		else {
 			fimDeJogo(g); //SE O JOGO NÃO ESTIVER RODANDO, DÁ FIM DE JOGO
@@ -120,7 +128,7 @@ public class PainelJogo extends JPanel implements ActionListener{
 	public void checarAlimento() {
 		if((x[0] == alimentoX) && (y[0] == alimentoY)) { //"SE A CABEÇA DA COBRA E O ALIMENTO OCUPAREM O MESMO ESPAÇO.."
 			partesCobra++; //ADICIONA 1 A QUANTIDADE DE PARTES DA COBRA
-			contador++; //AUMENTA A PONTUAÇÃO
+			pontuacao++; //AUMENTA A PONTUAÇÃO
 			novoAlimento(); //CRIA UM NOVO ALIMENTO
 		}
 	}
@@ -157,42 +165,53 @@ public class PainelJogo extends JPanel implements ActionListener{
 	
 	public void fimDeJogo(Graphics g) {
 		if(!rodando) {
+			if(pontuacao>highscore) { //SE PONTUAÇÃO FINAL FOR MAIOR QUE A PONTUAÇÃO MÁXIMA..
+				highscore = pontuacao; //PONTUAÇÃO MÁXIMA SERÁ PONTUAÇÃO FINAL
+			}
 			//PONTUAÇÃO FINAL
 			g.setColor(Color.GRAY); //COR DA FONTE DA PONTUAÇÃO (CINZA)
 			g.setFont(new Font("Monospaced", Font.BOLD, 75)); //FONTE DO TEXTO
 			FontMetrics metricas1 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
 			//DESENHA O TEXTO, COM TAL COR, MÉTRICA E TAMANHO PADRÃO DA FONTE
-			g.drawString("Pontuação: " + contador, (larguraTela - metricas1.stringWidth("Pontuação: " + contador))/2, g.getFont().getSize());
+			g.drawString("PONTUAÇÃO: " + pontuacao, (larguraTela - metricas1.stringWidth("PONTUAÇÃO: " + pontuacao))/2, g.getFont().getSize());
+			
+			//PONTUAÇÃO MÁXIMA
+			g.setColor(Color.GRAY); //COR DA FONTE DA PONTUAÇÃO (CINZA)
+			g.setFont(new Font("Monospaced", Font.BOLD, 75)); //FONTE DO TEXTO
+			FontMetrics metricas2 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
+			//DESENHA O TEXTO, COM TAL COR, MÉTRICA E TAMANHO PADRÃO DA FONTE
+			g.drawString("HIGHSCORE: " + highscore, (larguraTela - metricas2.stringWidth("HIGHSCORE: " + highscore))/2, g.getFont().getSize()+75);
+			
 			
 			if(partesCobra == larguraTela+alturaTela) { //SE A COBRA OCUPAR TODOS OS ESPAÇOS
 				g.setColor(Color.green); //COR DA FONTE DO TEXTO PONTUAÇÃO MÁXIMA (VERDE)
 				g.setFont(new Font("Monospaced", Font.BOLD, 75)); //FONTE DO TEXTO
-				FontMetrics metricas2 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
+				FontMetrics metricas3 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
 				//DESENHA O TEXTO, POSIÇÃO HORIZONTAL NA TELA E POSIÇÃO VERTICAL (METADE DA ALTURA DA TELA)
-				g.drawString("Pontuação", (larguraTela - metricas2.stringWidth("Pontuação"))/2, alturaTela/2);
-				g.drawString("MÁXIMA!", (larguraTela - metricas2.stringWidth("MÁXIMA"))/2, (alturaTela/2)+50);
+				g.drawString("Pontuação", (larguraTela - metricas3.stringWidth("Pontuação"))/2, alturaTela/2);
+				g.drawString("MÁXIMA!", (larguraTela - metricas3.stringWidth("MÁXIMA"))/2, (alturaTela/2)+50);
 				
 				//TEXTO DE REINICIAR
 				g.setColor(Color.white); //COR DA FONTE DO TEXTO DE REINICIAR (BRANCO)
 				g.setFont(new Font("Monospaced", Font.BOLD, 50)); //FONTE DO TEXTO (TAMANHO 50)
-				FontMetrics metricas3 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
-				g.drawString("Aperte ESPAÇO", (larguraTela - metricas3.stringWidth("Aperte ESPAÇO"))/2, (alturaTela/2)+100);
-				g.drawString("para Reiniciar", (larguraTela - metricas3.stringWidth("para Reiniciar"))/2, (alturaTela/2)+150);
+				FontMetrics metricas4 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
+				g.drawString("Aperte ESPAÇO", (larguraTela - metricas4.stringWidth("Aperte ESPAÇO"))/2, (alturaTela/2)+100);
+				g.drawString("para Reiniciar", (larguraTela - metricas4.stringWidth("para Reiniciar"))/2, (alturaTela/2)+150);
 			}
 			else { //TELA DE FIM DE JOGO PADRÃO
 				//TEXTO DE FIM DE JOGO
 				g.setColor(Color.red); //COR DA FONTE DO TEXTO FIM DE JOGO (VERMELHO)
 				g.setFont(new Font("Monospaced", Font.BOLD, 75)); //FONTE DO TEXTO (TAMANHO 75)
-				FontMetrics metricas2 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
+				FontMetrics metricas3 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
 				//DESENHA O TEXTO, POSIÇÃO HORIZONTAL NA TELA E POSIÇÃO VERTICAL (METADE DA ALTURA DA TELA)
-				g.drawString("Fim de Jogo", (larguraTela - metricas2.stringWidth("Fim de Jogo"))/2, alturaTela/2);
+				g.drawString("Fim de Jogo", (larguraTela - metricas3.stringWidth("Fim de Jogo"))/2, alturaTela/2);
 				
 				//TEXTO DE REINICIAR
 				g.setColor(Color.white); //COR DA FONTE DO TEXTO DE REINICIAR (BRANCO)
 				g.setFont(new Font("Monospaced", Font.BOLD, 50)); //FONTE DO TEXTO (TAMANHO 50)
-				FontMetrics metricas3 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
-				g.drawString("Aperte ESPAÇO", (larguraTela - metricas3.stringWidth("Aperte ESPAÇO"))/2, (alturaTela/2)+100);
-				g.drawString("para Reiniciar", (larguraTela - metricas3.stringWidth("para Reiniciar"))/2, (alturaTela/2)+150);
+				FontMetrics metricas4 = getFontMetrics(g.getFont()); //MÉTRICAS DA FONTE
+				g.drawString("Aperte ESPAÇO", (larguraTela - metricas4.stringWidth("Aperte ESPAÇO"))/2, (alturaTela/2)+100);
+				g.drawString("para Reiniciar", (larguraTela - metricas4.stringWidth("para Reiniciar"))/2, (alturaTela/2)+150);
 			}
 		}
 	}
@@ -236,7 +255,7 @@ public class PainelJogo extends JPanel implements ActionListener{
 					//REINICIA AS VARIÁVEIS DO JOGO, DESDE PARTES DA COBRA ATÉ POSIÇÃO DO ALIMENTO
 					partesCobra = 6;
 					direcao = 'D';
-					contador = 0;
+					pontuacao = 0;
 					alimentoX = 0;
 					alimentoY = 0;
 					novoAlimento();

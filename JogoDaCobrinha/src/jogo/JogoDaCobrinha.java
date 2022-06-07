@@ -1,4 +1,4 @@
-package vista;
+package jogo;
 
 public class JogoDaCobrinha {
 

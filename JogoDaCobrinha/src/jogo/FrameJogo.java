@@ -1,4 +1,4 @@
-package vista;
+package jogo;
 
 import javax.swing.JFrame;
 
